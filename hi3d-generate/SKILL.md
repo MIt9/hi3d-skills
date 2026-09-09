@@ -52,7 +52,7 @@ hi3d models
 ### Supported Export Formats by Category:
 • **`image-to-3d`**: `obj`, `glb`, `stl`, `fbx`, `usdz`, `3mf`
 • **`relief`**: `exr`, `png`, `stl`, `glb`, `3mf`, `bmp`
-• **`split`**: `obj`, `glb`, `stl`, `fbx`, `usdz`
+• **`split`**: `obj`, `glb`, `stl`, `fbx`, `usdz`, `3mf`
 • **`multicolor`**: `obj`, `glb`, `fbx`, `3mf`
 
 ---
@@ -83,22 +83,37 @@ hi3d run image-to-3d \
 ```
 
 ### C. Image to 3D Relief
-Generate a 3D relief / depth mesh from a single photo:
+Generate a 3D relief / depth mesh from a single photo (`/open-api/v1/depth/create-task`):
 ```bash
 hi3d run relief \
   --image ./portrait.png \
   --model pro \
-  --resolution Pro \
+  --height-relief 2.5 \
   --format stl \
   --wait \
   --download ./output_dir
 ```
 
 ### D. 3D Model Splitting & Multicolor
-Split existing 3D models or generate multi-color 3D models:
+Split 3D models or generate multi-color 3D objects:
 ```bash
-hi3d run split --image ./character.png --model character --format fbx --wait --download ./output_dir
-hi3d run multicolor --image ./colored.png --format 3mf --wait --download ./output_dir
+# Character Model Split
+hi3d run split \
+  --mesh ./character.glb \
+  --model character \
+  --part a \
+  --joint ball \
+  --format fbx \
+  --wait \
+  --download ./output_dir
+
+# Multicolor Mesh Generation
+hi3d run multicolor \
+  --mesh ./colored.glb \
+  --number-color 4 \
+  --format 3mf \
+  --wait \
+  --download ./output_dir
 ```
 
 ---
